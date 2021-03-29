@@ -2,17 +2,13 @@ import React from 'react';
 
 const Cart = (props) => {
     const cart = props.cart;
-    // console.log(cart);
-    // const price = cart[0];
-    // console.log(price);
 
     // const total = cart.reduce((total, pd) => total + pd.price , 0)
-
     //Total
     let total = 0
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i];
-        total = total + product.price;
+        total = total + product.price + product.quantity || 1;
     }
 
     //Shipping
@@ -20,10 +16,10 @@ const Cart = (props) => {
     if (total > 40) {
         shipping = 0;
     }
-    else if(total > 20){
+    else if (total > 20) {
         shipping = 4.99;
     }
-    else if(total > 0){
+    else if (total > 0) {
         shipping = 12.99;
     }
 
@@ -35,6 +31,7 @@ const Cart = (props) => {
     const handleFlotingNumber = (number) => number.toFixed(2);
     return (
         <div>
+            <h2>Order Summary</h2>
             <p>Items ordered: {cart.length}</p>
 
             <tr>
@@ -53,9 +50,10 @@ const Cart = (props) => {
                 <td><h3>Order Total: </h3></td>
                 <td> <h3>${handleFlotingNumber(grandTotal)}</h3></td>
             </tr>
+            {
+                props.children
+            }
 
-
-            <button>Review your order</button>
         </div>
     );
 };
